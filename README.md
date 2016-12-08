@@ -1,13 +1,14 @@
 # Api2Captcha
----
+
 Api2Captcha is an implementation of the 2Captcha service api v2.
 
 ### Installation
----
+-
+
 You can find this project on NuGet.
 
 ### Usage Example
----
+-
 
 ```csharp
       string apiKey = "2CaptchaKey";
@@ -17,7 +18,8 @@ You can find this project on NuGet.
       CaptchaResponse response = await solver.SolveCaptcha(datasiteKey, captchaUrl).ConfigureAwait(false);
 ```
 ### License
----
+-
+
 MIT License
 
 Copyright (c) 2016 dascia
