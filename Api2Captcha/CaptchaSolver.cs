@@ -194,7 +194,7 @@ namespace Api2Captcha
           throw new CaptchaException($"{httpResponse.ReasonPhrase}");
         CaptchaResponse captchaResponse;
         string strResponse = await httpResponse.Content.ReadAsStringAsync();
-        if (strResponse.Substring(0, 2) == "OK") captchaResponse = new CaptchaResponse(Response.OK, strResponse.Substring(4));
+        if (strResponse.Substring(0, 2) == "OK") captchaResponse = new CaptchaResponse(Response.OK, strResponse.Substring(3));
         else captchaResponse = new CaptchaResponse((Response)Enum.Parse(typeof(Response), strResponse), string.Empty);
         return captchaResponse;
       }
