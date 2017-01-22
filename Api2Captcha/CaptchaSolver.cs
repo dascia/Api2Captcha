@@ -182,9 +182,9 @@ namespace Api2Captcha
         else captchaResponse = new CaptchaResponse((Response)Enum.Parse(typeof(Response), strResponse), string.Empty);
         return captchaResponse;
       }
-      catch (Exception ex) when (ex is ArgumentOutOfRangeException || ex is ArgumentException)
+      catch (Exception ex) when (ex is ArgumentOutOfRangeException || ex is ArgumentException || ex is ArgumentNullException)
       {
-        throw new CaptchaException("Bad Response from 2Captcha Server", ex);
+        throw new CaptchaException("A problem ocurred parsing the response from 2Captcha", ex);
       }
     }
   }
