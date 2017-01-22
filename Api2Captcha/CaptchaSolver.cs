@@ -17,7 +17,8 @@ namespace Api2Captcha
     private int _proxyPort;
     private string _proxyHost;
     private HttpClient _client;
-    private int _captchaSolveInterval;
+    private int _requestInterval;
+    private int _initialRequestDelay;
     private const string SERVER_REQUEST_URL = "http://2captcha.com/in.php?";
     private const string SERVER_ANSWER_URL = "http://2captcha.com/res.php?";
 
@@ -30,15 +31,25 @@ namespace Api2Captcha
       get { return _apiKey; }
       set { _apiKey = value; }
     }
-    
+
+    /// <summary>
+    /// Waiting time before send the first request to check if the captcha
+    /// is solved
+    /// </summary>
+    public int InitialRequestDelay
+    {
+      get { return _initialRequestDelay; }
+      set { _initialRequestDelay = value; }
+    }
+
     /// <summary>
     /// Waiting time to send the first request to 2Captcha servers
     /// asking for the caotcha solution
     /// </summary>
-    public int CaptchaSolveInterval
+    public int RequestInterval
     {
-      get { return _captchaSolveInterval; }
-      set { _captchaSolveInterval = value; }
+      get { return _requestInterval; }
+      set { _requestInterval = value; }
     }
 
     #endregion
@@ -65,7 +76,8 @@ namespace Api2Captcha
     {
       _apiKey = apiKey;
       _useProxy = false;
-      _captchaSolveInterval = 10000;
+      _initialRequestDelay = 10000;
+      _requestInterval = 10000;
       _client = new HttpClient();
     }
 
@@ -78,7 +90,8 @@ namespace Api2Captcha
       _useProxy = true;
       _proxyHost = proxyHost;
       _proxyPort = proxyPort;
-      _captchaSolveInterval = 10000;
+      _initialRequestDelay = 10000;
+      _requestInterval = 10000;
       WebProxy proxy = new WebProxy(proxyHost, proxyPort);
       HttpClientHandler handler = new HttpClientHandler();
       handler.Proxy = proxy;
@@ -147,11 +160,12 @@ namespace Api2Captcha
       CaptchaResponse response = await (SendCaptcha(googleKey, captchaURL, useCaptchaProxy));
       if (response.Response == Response.OK)
       {
+        await Task.Delay(_initialRequestDelay);
         int timer = 0;
         do
         {
-          await Task.Delay(_captchaSolveInterval);
-          timer += _captchaSolveInterval;
+          await Task.Delay(_requestInterval);
+          timer += _requestInterval;
           if (timer > TIMEOUT)
           {
             response.Response = Response.TIMEOUT;
