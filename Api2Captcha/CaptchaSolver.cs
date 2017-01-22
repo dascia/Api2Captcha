@@ -17,6 +17,7 @@ namespace Api2Captcha
     private int _proxyPort;
     private string _proxyHost;
     private HttpClient _client;
+    private ProxyType _proxyType;
     private int _requestInterval;
     private int _initialRequestDelay;
     private const string SERVER_REQUEST_URL = "http://2captcha.com/in.php?";
@@ -84,12 +85,13 @@ namespace Api2Captcha
     /// <summary>
     /// Proxy Ctor
     /// </summary>
-    public CaptchaSolver(string apiKey, string proxyHost, int proxyPort)
+    public CaptchaSolver(string apiKey, string proxyHost, int proxyPort, ProxyType proxyType = ProxyType.HTTP)
     {
       _apiKey = apiKey;
       _useProxy = true;
       _proxyHost = proxyHost;
       _proxyPort = proxyPort;
+      _proxyType = proxyType;
       _initialRequestDelay = 10000;
       _requestInterval = 10000;
       WebProxy proxy = new WebProxy(proxyHost, proxyPort);
@@ -121,7 +123,7 @@ namespace Api2Captcha
       if (useCaptchaProxy && _useProxy)
       {
         queryParams.Add(new KeyValuePair<string, string>("proxy",$"{_proxyHost}:{_proxyPort}"));
-        queryParams.Add(new KeyValuePair<string, string>("proxytype", "HTTP"));
+        queryParams.Add(new KeyValuePair<string, string>("proxytype", $"{_proxyType}"));
       }
       FormUrlEncodedContent content = new FormUrlEncodedContent(queryParams);
       query = SERVER_REQUEST_URL + await content.ReadAsStringAsync();
