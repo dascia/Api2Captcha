@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Api2Captcha.Account
+namespace Api2Captcha
 {
   public class Helper2Captcha
   {
