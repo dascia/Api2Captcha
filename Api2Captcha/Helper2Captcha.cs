@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Api2Captcha.Account
 {
-  class Helper2Captcha
+  public class Helper2Captcha
   {
     /// <summary>
     /// Gets the account balance
