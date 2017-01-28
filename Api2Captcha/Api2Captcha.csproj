@@ -40,11 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper2Captcha.cs" />
     <Compile Include="CaptchaException.cs" />
     <Compile Include="CaptchaResponse.cs" />
     <Compile Include="CaptchaSolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProxyTypecs.cs" />
+    <Compile Include="ProxyType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
