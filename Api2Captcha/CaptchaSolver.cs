@@ -111,7 +111,7 @@ namespace Api2Captcha
     /// This will only works if a proxy has been defined in the object.
     /// </param>
     /// <returns></returns>
-    private async Task<CaptchaResponse> SendCaptcha(string googleKey, string captchaURL, bool useCaptchaProxy = false)
+    private async Task<CaptchaResponse> SendCaptcha(string googleKey, string captchaURL)
     {
       //http://2captcha.com/in.php?key=YOUR_CAPTCHA_KEY&method=userrecaptcha&googlekey=%googlekey%&pageurl=%URL%
       string query = string.Empty;
@@ -120,7 +120,7 @@ namespace Api2Captcha
       queryParams.Add(new KeyValuePair<string, string>("method", "userrecaptcha"));
       queryParams.Add(new KeyValuePair<string, string>("googlekey", googleKey));
       queryParams.Add(new KeyValuePair<string, string>("pageurl", captchaURL));
-      if (useCaptchaProxy && _useProxy)
+      if (_useProxy)
       {
         queryParams.Add(new KeyValuePair<string, string>("proxy",$"{_proxyHost}:{_proxyPort}"));
         queryParams.Add(new KeyValuePair<string, string>("proxytype", $"{_proxyType}"));
@@ -157,9 +157,9 @@ namespace Api2Captcha
     /// <param name="captchaURL"></param>
     /// <param name="useCaptchaProxy"></param>
     /// <returns></returns>
-    public async Task<CaptchaResponse> SolveCaptcha(string googleKey, string captchaURL, bool useCaptchaProxy = false)
+    public async Task<CaptchaResponse> SolveCaptcha(string googleKey, string captchaURL)
     {
-      CaptchaResponse response = await (SendCaptcha(googleKey, captchaURL, useCaptchaProxy));
+      CaptchaResponse response = await (SendCaptcha(googleKey, captchaURL));
       if (response.Response == Response.OK)
       {
         await Task.Delay(_initialRequestDelay);
