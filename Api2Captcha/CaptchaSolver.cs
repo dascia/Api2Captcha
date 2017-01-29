@@ -163,7 +163,8 @@ namespace Api2Captcha
       if (response.Response == Response.OK)
       {
         await Task.Delay(_initialRequestDelay);
-        while ((response = await GetCaptchaSolution(response.Value)).Response == Response.CAPCHA_NOT_READY)
+        string captchaId = response.Value;
+        while ((response = await GetCaptchaSolution(captchaId)).Response == Response.CAPCHA_NOT_READY)
           await Task.Delay(_requestInterval);
       }
       RaiseCaptchaSolved(response);
