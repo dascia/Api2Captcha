@@ -10,8 +10,6 @@ namespace Api2Captcha
   {
     #region Fields
 
-    private const int TIMEOUT = 120000;
-
     private string _apiKey;
     private bool _useProxy;
     private int _proxyPort;
@@ -78,7 +76,7 @@ namespace Api2Captcha
       _apiKey = apiKey;
       _useProxy = false;
       _initialRequestDelay = 10000;
-      _requestInterval = 10000;
+      _requestInterval = 5000;
       _client = new HttpClient();
     }
 
@@ -93,7 +91,7 @@ namespace Api2Captcha
       _proxyPort = proxyPort;
       _proxyType = proxyType;
       _initialRequestDelay = 10000;
-      _requestInterval = 10000;
+      _requestInterval = 5000;
       WebProxy proxy = new WebProxy(proxyHost, proxyPort);
       HttpClientHandler handler = new HttpClientHandler();
       handler.Proxy = proxy;
